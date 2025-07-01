@@ -1,0 +1,150 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pradeep Tadi | Full Stack Developer</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<!-- 🔹 Navbar -->
+
+<!-- 🔹 Navbar -->
+<nav class="navbar">
+  <div class="container navbar-inner">
+    <div class="logo">Pradeep <span>Tadi</span></div>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#hero">Welcome</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <form method="get" class="search-bar">
+      <input type="text" name="q" placeholder="Search..." value="{{ request.GET.q }}">
+      <button type="submit">🔍</button>
+    </form>
+  </div>
+</nav>
+
+<!-- 🔹 Featured Projects Scroll -->
+<section class="featured-scroll">
+  <div class="scroll-wrapper">
+    <div class="scroll-track">
+      {% for project in projects %}
+        <a href="{% url 'project_detail' project.pk %}" class="scroll-item">
+          {% if project.images.first %}
+            <img src="{{ project.images.first.image.url }}" alt="{{ project.title }}">
+          {% endif %}
+          <span>{{ project.title }}</span>
+        </a>
+      {% endfor %}
+      {% for project in projects %}
+        <a href="{% url 'project_detail' project.pk %}" class="scroll-item">
+          {% if project.images.first %}
+            <img src="{{ project.images.first.image.url }}" alt="{{ project.title }}">
+          {% endif %}
+          <span>{{ project.title }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- 🔹 Banner Only -->
+<section class="banner-only">
+  <img src="{% static 'images/cover.png' %}" alt="Banner" class="banner-full">
+</section>
+
+<!-- 🔹 Header -->
+<header class="hero" id="hero">
+  <div class="hero-content">
+    <h1>Hello, I'm <span>Pradeep</span></h1>
+    <p>Full Stack Developer | Cybersecurity Enthusiast</p>
+    <p> I’m Pradeep Tadi, a results-driven Python Full-Stack Developer with a deep interest in ethical hacking, cybersecurity, and OSINT (Open Source Intelligence).
+
+I specialize in building end-to-end web applications using Django and React, and I combine my development skills with a strong understanding of digital investigation tools. My work bridges the gap between software engineering and cybersecurity — transforming raw data into actionable intelligence through automation, API integration, and intelligent UI design.
+
+I’m the creator of TraceIntel, an advanced OSINT tool that helps users uncover digital footprints across social media platforms, phone numbers, and domain infrastructures — used by security enthusiasts, journalists, and analysts.
+
+With every project, I focus on clarity, efficiency, and ethical impact.
+
+</p>
+  </div>
+</header>
+
+<!-- 🔹 Projects Grid -->
+<section id="projects">
+  <div class="container">
+    <h2>Projects</h2>
+    <div class="card-grid">
+      {% for project in projects %}
+        <div class="card">
+          <h3>{{ project.title }}</h3>
+          <p>{{ project.description|truncatechars:100 }}</p>
+
+          {% if project.images.first %}
+            <img src="{{ project.images.first.image.url }}" alt="Project image">
+          {% endif %}
+
+          {% if project.video %}
+            <video width="100%" controls>
+              <source src="{{ project.video.url }}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          {% endif %}
+
+          <div class="project-links">
+            {% if project.github_url %}<a href="{{ project.github_url }}" target="_blank">GitHub</a>{% endif %}
+            {% if project.live_url %}<a href="{{ project.live_url }}" target="_blank">Live</a>{% endif %}
+          </div>
+
+          <a href="{% url 'project_detail' project.pk %}" class="btn">View Full Info</a>
+        </div>
+      {% empty %}
+        <p>No projects yet. Stay tuned!</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- 🔹 Contact Section -->
+<section id="contact">
+  <div class="container">
+    <h2>Contact Me</h2>
+
+    <!-- 🔘 Contact Buttons -->
+<div class="contact-buttons">
+  <a href="mailto:pradeeptadi03@gmail.com" class="btn" target="_blank">📧 Email Me</a>
+  <a href="https://github.com/Pradeeptadi" class="btn" target="_blank">🐱 GitHub</a>
+  <a href="https://www.instagram.com/pradeeptadi___" class="btn" target="_blank">📷 Instagram</a>
+  <a href="https://www.linkedin.com/in/pradeep-tadi-025682289?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="btn" target="_blank">💼 LinkedIn</a>
+</div>
+
+
+<br>
+    <!-- 📬 Contact Form -->
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <input type="file" name="attachment">
+      <button type="submit">Send</button>
+    </form>
+  </div>
+</section>
+
+<!-- 🔹 Footer -->
+<footer>
+  <div class="container">
+    <p>© 2025 Pradeep Tadi |
+      <a href="https://github.com/Pradeeptadi" target="_blank">GitHub</a> |
+      <a href="https://www.linkedin.com/in/pradeep-tadi-025682289?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">LinkedIn</a> |
+      <a href="https://www.instagram.com/pradeeptadi___" target="_blank">Instagram</a>
+    </p>
+  </div>
+</footer>
+
+
+</body>
+</html>

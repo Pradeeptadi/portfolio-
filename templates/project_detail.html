@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ project.title }} | Project Detail</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/project_detail.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <div class="logo">Pradeep Tadi</div>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="search-bar">
+  <form method="get" action="/">
+    <input type="text" name="q" placeholder="Search projects..." value="{{ request.GET.q }}">
+  </form>
+</div>
+
+<div class="scroll-container">
+  {% for p in all_projects %}
+    <div class="scroll-item">
+      <a href="{% url 'project_detail' p.pk %}">
+        {% if p.images.first %}<img src="{{ p.images.first.image.url }}" alt="{{ p.title }}">{% endif %}
+        <div>{{ p.title }}</div>
+      </a>
+    </div>
+  {% endfor %}
+</div>
+
+<div class="detail-container">
+  <h1>{{ project.title }}</h1>
+  <p>{{ project.description }}</p>
+
+  <div class="detail-media">
+    {% for img in project.images.all %}
+      <img src="{{ img.image.url }}" alt="{{ project.title }} Image">
+    {% endfor %}
+
+    {% if project.video %}
+      <video controls>
+        <source src="{{ project.video.url }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    {% endif %}
+  </div>
+
+  <div class="project-links">
+    {% if project.github_url %}<a href="{{ project.github_url }}" class="btn" target="_blank">GitHub</a>{% endif %}
+    {% if project.live_url %}<a href="{{ project.live_url }}" class="btn" target="_blank">Live</a>{% endif %}
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <p>© 2025 Pradeep Tadi | 
+      <a href="https://github.com/Pradeeptadi" target="_blank">GitHub</a> |
+      <a href="https://www.linkedin.com/in/pradeep-tadi-025682289/" target="_blank">LinkedIn</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
