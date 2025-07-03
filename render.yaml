@@ -1,10 +1,14 @@
 services:
   - type: web
-    name: pradeeptadi-portfolio
+    name: portfolio
     env: python
-    buildCommand: ""
-    startCommand: |
-      python manage.py migrate && python manage.py runserver 0.0.0.0:8000
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn portfolio_project.wsgi:application
     envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: portfolio_project.settings
       - key: PYTHON_VERSION
-        value: 3.13.4
+        value: 3.11
+      - key: SECRET_KEY
+        value: &jz4##j^-5l+%+ogx9y=^=okk6%px@5_&bkj86^h36o)weh-m$
+    plan: free
