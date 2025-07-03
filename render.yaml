@@ -1,10 +1,10 @@
 services:
   - type: web
-    name: portfolio
+    name: pradeeptadi-portfolio
     env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn portfolio_project.wsgi:application"
+    buildCommand: ""
+    startCommand: |
+      python manage.py migrate && python manage.py runserver 0.0.0.0:8000
     envVars:
-      - key: DEBUG
-        value: "False"
-    postdeploy: "python manage.py migrate"
+      - key: PYTHON_VERSION
+        value: 3.13.4
